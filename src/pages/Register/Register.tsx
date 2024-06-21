@@ -38,7 +38,7 @@ const Register: React.FC = () => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}auth/register`,
+        `https://mcp-server-production.up.railway.app/ws/auth/register`,
         formData
       );
       setSuccess('Registro exitoso');
