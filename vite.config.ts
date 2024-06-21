@@ -13,5 +13,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
-  base: 'https://rauljariasz.github.io/hash-router/',
+  base: 'https://rauljariasz.github.io/mcp-client/',
 });
