@@ -32,6 +32,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log(import.meta.env.VITE_API_URL);
+    console.log('je');
     setError('');
     setSuccess('');
 
