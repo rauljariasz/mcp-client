@@ -31,8 +31,8 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(import.meta.env.VITE_API_URL);
     console.log('je');
+    console.log(import.meta.env.VITE_API_URL);
     setError('');
     setSuccess('');
 
@@ -51,7 +51,7 @@ const Register: React.FC = () => {
     <main>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          <label>Emailllllll:</label>
           <input
             type='email'
             name='email'
