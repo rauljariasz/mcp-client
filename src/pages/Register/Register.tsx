@@ -51,7 +51,7 @@ const Register: React.FC = () => {
     <main>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Emails:</label>
+          <label>Email:</label>
           <input
             type='email'
             name='email'
