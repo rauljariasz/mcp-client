@@ -1,11 +1,14 @@
 import { HashRouter } from 'react-router-dom';
 import AppRoutes from './pages/AppRoutes';
+import { NextUIProvider } from '@nextui-org/react';
 
 function App() {
   return (
-    <HashRouter>
-      <AppRoutes />
-    </HashRouter>
+    <NextUIProvider>
+      <HashRouter>
+        <AppRoutes />
+      </HashRouter>
+    </NextUIProvider>
   );
 }
 
