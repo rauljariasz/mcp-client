@@ -7,7 +7,7 @@ jobs:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     env:
-      VITE_API_URL: ${{ vars.VITE_API_URL }} # Define la variable de entorno
+      VITE_API_URL: ${{ secrets.VITE_API_URL }} # Define la variable de entorno
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
           npm ci
           npm run build
         env:
-          VITE_API_URL: ${{ vars.VITE_API_URL }} # Puedes definir variables de entorno en pasos específicos también
+          VITE_API_URL: ${{ secrets.VITE_API_URL }} # Puedes definir variables de entorno en pasos específicos también
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
