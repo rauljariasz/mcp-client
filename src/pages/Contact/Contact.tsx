@@ -1,5 +1,5 @@
 const Contact = () => {
-  return <main className='h-[2000px]'>Contacto</main>;
+  return <main className='main-container h-[2000px]'>Contacto</main>;
 };
 
 export default Contact;

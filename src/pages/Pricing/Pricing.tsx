@@ -1,5 +1,5 @@
 const Pricing = () => {
-  return <main className='h-[2000px]'>Precios</main>;
+  return <main className='main-container h-[2000px]'>Precios</main>;
 };
 
 export default Pricing;

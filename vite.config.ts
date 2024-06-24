@@ -10,6 +10,16 @@ export default defineConfig({
   preview: {
     port: 3000,
   },
+  resolve: {
+    alias: {
+      '@': '/src',
+      '@components': '/src/components',
+      '@hooks': '/src/hooks',
+      '@context': '/src/context',
+      '@constants': '/src/constants',
+      '@pages': '/src/pages',
+    },
+  },
   build: {
     outDir: 'dist',
   },

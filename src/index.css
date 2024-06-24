@@ -6,4 +6,31 @@
   body {
     @apply bg-black-p text-white-p;
   }
+  /* Clase para los contenedores main de los componentes Pagina */
+  .main-container {
+    @apply w-full max-w-[1024px] mx-auto px-6 flex-1;
+  }
+  input:-webkit-autofill {
+    background-color: #202d28; /* Cambia esto al color de fondo que prefieras */
+    -webkit-box-shadow: 0 0 0px 1000px #202d28 inset; /* Asegura que el fondo se mantenga consistente */
+    -webkit-text-fill-color: #f2f2f2; /* Cambia esto al color de texto que prefieras */
+  }
+
+  input:-webkit-autofill:focus {
+    background-color: #202d28; /* Cambia esto al color de fondo que prefieras */
+    -webkit-box-shadow: 0 0 0px 1000px #202d28 inset; /* Asegura que el fondo se mantenga consistente */
+    -webkit-text-fill-color: #f2f2f2; /* Cambia esto al color de texto que prefieras */
+  }
+
+  input:-webkit-autofill:hover {
+    background-color: #202d28; /* Cambia esto al color de fondo que prefieras */
+    -webkit-box-shadow: 0 0 0px 1000px #202d28 inset; /* Asegura que el fondo se mantenga consistente */
+    -webkit-text-fill-color: #f2f2f2; /* Cambia esto al color de texto que prefieras */
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 }
