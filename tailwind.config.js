@@ -11,7 +11,6 @@ export default {
   ],
   theme: {
     screens: {
-      msm: '505px',
       sm: '640px',
       md: '768px',
       lg: '1024px',
@@ -22,11 +21,12 @@ export default {
       colors: {
         primary: '#79ae92',
         secondary: '#202d28',
-        tertiary: '#001f36',
-        quaternary: '#1c5560',
+        tertiary: '#1c5560',
         'black-p': '#0a0c0d',
         'white-p': '#f2f2f2',
         warm: '#fbffcd',
+        error: '#FA3729',
+        neutral: '#6b7280',
       },
     },
   },

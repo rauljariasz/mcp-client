@@ -11,6 +11,8 @@ import {
   Button,
 } from '@nextui-org/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { RxExit } from 'react-icons/rx';
 
 // *---------------------------------------------------------* //
 // Tener en cuenta a que debido que se esta usando hashRouter //
@@ -24,6 +26,7 @@ const Header = () => {
 
   // Hooks
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <Navbar
@@ -50,6 +53,15 @@ const Header = () => {
       <NavbarContent className='hidden sm:flex gap-8' justify='center'>
         <NavbarItem>
           <RouterLink
+            to='/'
+            className='text-primary font-semibold hover:text-quaternary transition-all'
+          >
+            Inicio
+          </RouterLink>
+        </NavbarItem>
+
+        <NavbarItem>
+          <RouterLink
             to='/contact'
             className='text-primary font-semibold hover:text-quaternary transition-all'
           >
@@ -68,41 +80,88 @@ const Header = () => {
       </NavbarContent>
 
       {/* Botón "inicia sesión" */}
-      <NavbarContent justify='end'>
-        <Button
-          as={Link}
-          color='primary'
-          onPress={() => {
-            setIsMenuOpen(false);
-            navigate('/login');
-          }}
-          variant='flat'
-        >
-          Inicia sesión
-        </Button>
-      </NavbarContent>
+      {isAuthenticated ? (
+        <NavbarContent justify='end' className='sm:flex hidden'>
+          <button
+            className='flex items-center gap-2 text-error font-semibold'
+            type='button'
+            onClick={() => {
+              setIsMenuOpen(false);
+              logout();
+            }}
+          >
+            Salir
+            <RxExit className='w-5 h-5' />
+          </button>
+        </NavbarContent>
+      ) : (
+        <NavbarContent justify='end'>
+          <Button
+            as={Link}
+            color='primary'
+            onPress={() => {
+              setIsMenuOpen(false);
+              navigate('/login');
+            }}
+            variant='flat'
+          >
+            Inicia sesión
+          </Button>
+        </NavbarContent>
+      )}
 
       {/* Navegación Mobile */}
       <NavbarMenu className='bg-secondary'>
         <NavbarMenuItem>
           <RouterLink
             onClick={() => setIsMenuOpen(false)}
+            to='/'
+            className='text-white-p font-semibold hover:text-secondary flex w-full'
+          >
+            Inicio
+          </RouterLink>
+        </NavbarMenuItem>
+
+        <span className='w-full h-[1px] bg-white-p my-2'></span>
+
+        <NavbarMenuItem>
+          <RouterLink
+            onClick={() => setIsMenuOpen(false)}
             to='/contact'
-            className='text-primary font-semibold hover:text-secondary transition-all'
+            className='text-white-p font-semibold hover:text-secondary flex w-full'
           >
             Contacto
           </RouterLink>
         </NavbarMenuItem>
 
+        <span className='w-full h-[1px] bg-white-p my-2'></span>
+
         <NavbarMenuItem>
           <RouterLink
             onClick={() => setIsMenuOpen(false)}
             to='/pricing'
-            className='text-primary font-semibold hover:text-quaternary transition-all'
+            className='text-white-p font-semibold hover:text-quaternary flex w-full'
           >
             Precios
           </RouterLink>
         </NavbarMenuItem>
+
+        <span className='w-full h-[1px] bg-white-p my-2'></span>
+
+        {isAuthenticated ? (
+          <NavbarMenuItem>
+            <button
+              className='flex items-center gap-2 text-error font-semibold'
+              type='button'
+              onClick={() => {
+                setIsMenuOpen(false);
+                logout();
+              }}
+            >
+              Salir <RxExit className='w-5 h-5' />
+            </button>
+          </NavbarMenuItem>
+        ) : null}
       </NavbarMenu>
     </Navbar>
   );

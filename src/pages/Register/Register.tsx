@@ -46,7 +46,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <main>
+    <main className='main-container min-h-screen'>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
