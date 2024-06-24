@@ -5,3 +5,5 @@ export const validateEmail = (value: string): boolean => {
     return false;
   }
 };
+
+export const onlyLettersAndNumbers = /^[a-zA-Z0-9]*$/;

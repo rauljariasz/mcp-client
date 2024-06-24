@@ -100,7 +100,7 @@ const Verify = () => {
         </section>
 
         {/*  */}
-        <p className='mb-[56px]'>
+        <p className='mb-[56px] text-center'>
           Verifica tu correo electronico para tener acceso a nuestra plataforma.
         </p>
 
