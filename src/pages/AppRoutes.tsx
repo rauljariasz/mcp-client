@@ -12,6 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNotify } from '@/hooks/useNotify';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 const AppRoutes = () => {
   // Hooks
@@ -67,6 +68,7 @@ const AppRoutes = () => {
           <Route path='/pricing' element={<Pricing />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/verify' element={<Verify />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Route>
       </Routes>
     </>
