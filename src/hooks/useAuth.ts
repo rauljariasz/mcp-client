@@ -18,6 +18,8 @@ export const useAuth = () => {
 
   const userInfo = authContext.userInfo;
 
+  const setUserInfo = authContext.setUserInfo;
+
   const updateUserInfo = (data: User) => {
     const { setUserInfo } = authContext;
     setUserInfo({
@@ -71,6 +73,7 @@ export const useAuth = () => {
 
   return {
     userInfo,
+    setUserInfo,
     updateUserInfo,
     isAuthenticated,
     setIsAuthenticated,

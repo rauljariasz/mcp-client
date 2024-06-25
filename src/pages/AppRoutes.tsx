@@ -13,11 +13,13 @@ import { ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNotify } from '@/hooks/useNotify';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
+import Profile from './Profile/Profile';
+import AccessDenied from './AccessDenied/AccessDenied';
 
 const AppRoutes = () => {
   // Hooks
   const { getDataUser, isAccessExpired } = useClient();
-  const { updateUserInfo, setIsAuthenticated } = useAuth();
+  const { updateUserInfo, setIsAuthenticated, isAuthenticated } = useAuth();
   const { notifyError } = useNotify();
 
   // Efecto para loguear usuario.
@@ -69,6 +71,12 @@ const AppRoutes = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/verify' element={<Verify />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+
+          {/* Rutas autenticadas para el usuario */}
+          <Route
+            path='/profile'
+            element={isAuthenticated ? <Profile /> : <AccessDenied />}
+          />
         </Route>
       </Routes>
     </>

@@ -77,6 +77,17 @@ const Header = () => {
             Precios
           </RouterLink>
         </NavbarItem>
+
+        {isAuthenticated && (
+          <NavbarItem>
+            <RouterLink
+              to='/profile'
+              className='text-warm font-semibold hover:text-quaternary flex w-full'
+            >
+              Mi perfil
+            </RouterLink>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       {/* Botón "inicia sesión" */}
@@ -148,6 +159,22 @@ const Header = () => {
 
         <span className='w-full h-[1px] bg-white-p my-2'></span>
 
+        {/* Mi perfil */}
+        {isAuthenticated ? (
+          <NavbarMenuItem>
+            <RouterLink
+              onClick={() => setIsMenuOpen(false)}
+              to='/profile'
+              className='text-primary font-semibold hover:text-quaternary flex w-full'
+            >
+              Mi perfil
+            </RouterLink>
+          </NavbarMenuItem>
+        ) : null}
+
+        <span className='w-full h-[1px] bg-white-p my-2'></span>
+
+        {/* Salir */}
         {isAuthenticated ? (
           <NavbarMenuItem>
             <button

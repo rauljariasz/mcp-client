@@ -1,6 +1,6 @@
 import Input from '@/components/common/Input';
 import { Button, Tab, Tabs } from '@nextui-org/react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useEmptyInput } from '@/hooks/useEmptyInput';
 import { MdArrowForwardIos, MdOutlineEmail } from 'react-icons/md';
@@ -64,7 +64,8 @@ const ForgotPassword = () => {
   };
 
   //   Función que envia la petición para recibir el codigo
-  const forgotPassword = async () => {
+  const forgotPassword = async (e: FormEvent) => {
+    e.preventDefault();
     setLoadingButton(true);
 
     try {
@@ -137,7 +138,8 @@ const ForgotPassword = () => {
   };
 
   //   Función para enviar el cambio de contraseña
-  const recoveryPassword = async () => {
+  const recoveryPassword = async (e: FormEvent) => {
+    e.preventDefault();
     setLoadingButton(true);
 
     const data = {
@@ -177,7 +179,7 @@ const ForgotPassword = () => {
   return (
     <main className='main-container flex-center py-6'>
       <ToastContainer theme='colored' draggable className='md:w-[600px]' />
-      <form className='flex flex-col items-center w-full max-w-[380px] gap-4 px-6 py-8 rounded-2xl bg-secondary transition-all'>
+      <div className='flex flex-col items-center w-full max-w-[380px] gap-4 px-6 py-8 rounded-2xl bg-secondary transition-all'>
         {/* LOGO */}
         <section className='flex text-[26px]'>
           <h2 className='text-primary font-bold text-inherit'>MCP</h2>
@@ -199,7 +201,10 @@ const ForgotPassword = () => {
 
         {/* Email Input / cambio de contraseña */}
         {stepSelected === 'stepOne' ? (
-          <section className='w-full flex flex-col gap-3 items-center'>
+          <form
+            onSubmit={forgotPassword}
+            className='w-full flex flex-col gap-3 items-center'
+          >
             <Input
               value={formData.email}
               handleChange={handleChange}
@@ -219,17 +224,19 @@ const ForgotPassword = () => {
             {/* Iniciar sesión */}
             <Button
               isLoading={loadingButton}
-              type='button'
+              type='submit'
               color='primary'
-              onClick={() => forgotPassword()}
               className='w-full max-w-[200px] disabled:bg-neutral'
               disabled={!validateEmail(formData.email)}
             >
               Continuar
             </Button>
-          </section>
+          </form>
         ) : (
-          <section className='w-full flex flex-col gap-3 items-center'>
+          <form
+            onSubmit={recoveryPassword}
+            className='w-full flex flex-col gap-3 items-center'
+          >
             <Input
               value={formData.code}
               handleChange={handleChange}
@@ -266,9 +273,8 @@ const ForgotPassword = () => {
             {/* Cambiar contraseña */}
             <Button
               isLoading={loadingButton}
-              type='button'
+              type='submit'
               color='primary'
-              onClick={() => recoveryPassword()}
               className='w-full max-w-[200px] disabled:bg-neutral'
               disabled={isHandleSubmitEnable()}
             >
@@ -285,9 +291,9 @@ const ForgotPassword = () => {
                 Reenviar <MdArrowForwardIos />
               </button>
             </div>
-          </section>
+          </form>
         )}
-      </form>
+      </div>
     </main>
   );
 };

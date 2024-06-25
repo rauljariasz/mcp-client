@@ -67,6 +67,8 @@ const Verify = () => {
         notifySuccess('Verificación exitosa.');
         setTimeout(() => {
           updateUserInfo(res.data.data);
+          localStorage.setItem('token', res.data.data.token);
+          localStorage.setItem('refresh', res.data.data.refresh);
           setIsAuthenticated(true);
           navigate('/', { replace: true });
         }, 2500);

@@ -53,6 +53,13 @@ const Register: React.FC = () => {
       }
     }
 
+    // Correo
+    if (name === 'email') {
+      if (value.length > 250) {
+        return;
+      }
+    }
+
     // Nombre de usuario
     if (name === 'username') {
       if (!onlyLettersAndNumbers.test(value) || value.length > 20) {
