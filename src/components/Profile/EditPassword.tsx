@@ -139,7 +139,7 @@ const EditPassword = () => {
           {(onClose) => (
             <>
               <ModalHeader className='flex flex-col gap-1'>
-                Editar correo electronico
+                Editar contraseña
               </ModalHeader>
               <ModalBody>
                 {/* Contraseña actual */}
