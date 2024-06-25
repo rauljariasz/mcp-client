@@ -11,6 +11,7 @@ import { validateEmail } from '@constants/regex';
 import { useEmptyInput } from '@hooks/useEmptyInput';
 import { LoginForm as LoginTypes } from '@/types';
 import { useAuth } from '@hooks/useAuth';
+import { MdArrowForwardIos } from 'react-icons/md';
 import { useNotify } from '@hooks/useNotify';
 
 const Login = () => {
@@ -122,6 +123,14 @@ const Login = () => {
           }
           icon={<MdOutlineEmail className='w-[30px] h-[30px]' />}
         />
+
+        <button
+          onClick={() => navigate('/forgot-password')}
+          type='button'
+          className='self-end flex items-center gap-1 text-primary font-semibold translate-y-2'
+        >
+          Olvide mi contraseña <MdArrowForwardIos />
+        </button>
 
         {/* Password Input */}
         <InputPassword
