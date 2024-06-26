@@ -13,6 +13,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { RxExit } from 'react-icons/rx';
+import { useInitialLoad } from '@/hooks/useInitialLoad';
 
 // *---------------------------------------------------------* //
 // Tener en cuenta a que debido que se esta usando hashRouter //
@@ -27,6 +28,7 @@ const Header = () => {
   // Hooks
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
+  const { initialLoad } = useInitialLoad();
 
   return (
     <Navbar
@@ -107,17 +109,19 @@ const Header = () => {
         </NavbarContent>
       ) : (
         <NavbarContent justify='end'>
-          <Button
-            as={Link}
-            color='primary'
-            onPress={() => {
-              setIsMenuOpen(false);
-              navigate('/login');
-            }}
-            variant='flat'
-          >
-            Inicia sesión
-          </Button>
+          {!initialLoad && (
+            <Button
+              as={Link}
+              color='primary'
+              onPress={() => {
+                setIsMenuOpen(false);
+                navigate('/login');
+              }}
+              variant='flat'
+            >
+              Inicia sesión
+            </Button>
+          )}
         </NavbarContent>
       )}
 

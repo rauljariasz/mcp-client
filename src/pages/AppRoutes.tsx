@@ -15,20 +15,37 @@ import { useNotify } from '@/hooks/useNotify';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import Profile from './Profile/Profile';
 import AccessDenied from './AccessDenied/AccessDenied';
+import { useData } from '@/hooks/useData';
+import InitialLoad from './InitialLoad/InitialLoad';
+import { useInitialLoad } from '@/hooks/useInitialLoad';
 
 const AppRoutes = () => {
   // Hooks
   const { getDataUser, isAccessExpired } = useClient();
+  const { getCourses } = useData();
   const { updateUserInfo, setIsAuthenticated, isAuthenticated } = useAuth();
   const { notifyError } = useNotify();
+  const { initialLoad, setInitialLoad } = useInitialLoad();
 
-  // Efecto para loguear usuario.
   useEffect(() => {
     const token = localStorage.getItem('token');
     const refresh = localStorage.getItem('refresh');
+
+    const promises = [];
+
     if (token && refresh) {
-      dataUser(token, refresh);
+      promises.push(dataUser(token, refresh));
     }
+    promises.push(getCourses());
+
+    Promise.all(promises)
+      .catch((error) => {
+        console.error('Error loading data:', error);
+      })
+      .finally(() => {
+        setInitialLoad(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -64,19 +81,27 @@ const AppRoutes = () => {
       <ToastContainer theme='colored' draggable className='md:w-[600px]' />
       <Routes>
         <Route element={<Layout />}>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/pricing' element={<Pricing />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/verify' element={<Verify />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
+          {initialLoad ? (
+            <>
+              <Route path='*' element={<InitialLoad />} />
+            </>
+          ) : (
+            <>
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/pricing' element={<Pricing />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/verify' element={<Verify />} />
+              <Route path='/forgot-password' element={<ForgotPassword />} />
 
-          {/* Rutas autenticadas para el usuario */}
-          <Route
-            path='/profile'
-            element={isAuthenticated ? <Profile /> : <AccessDenied />}
-          />
+              {/* Rutas autenticadas para el usuario */}
+              <Route
+                path='/profile'
+                element={isAuthenticated ? <Profile /> : <AccessDenied />}
+              />
+            </>
+          )}
         </Route>
       </Routes>
     </>
