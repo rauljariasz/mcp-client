@@ -30,6 +30,10 @@ export default {
       },
     },
   },
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      defaultTheme: 'dark',
+    }),
+  ],
   darkMode: 'class',
 };

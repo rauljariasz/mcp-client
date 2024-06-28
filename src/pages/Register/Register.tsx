@@ -135,6 +135,9 @@ const Register: React.FC = () => {
         <h1 className='text-[26px] font-semibold text-white-p'>
           Crea tu cuenta
         </h1>
+        <p className='font-semibold text-[12px] translate-y-[-10px]'>
+          ¡Y accede a nuestro contenido!
+        </p>
 
         {/* Nombre  */}
         <Input

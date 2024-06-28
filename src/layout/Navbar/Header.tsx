@@ -14,6 +14,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { RxExit } from 'react-icons/rx';
 import { useInitialLoad } from '@/hooks/useInitialLoad';
+import './Header.css';
 
 // *---------------------------------------------------------* //
 // Tener en cuenta a que debido que se esta usando hashRouter //
@@ -35,6 +36,9 @@ const Header = () => {
       className='bg-[#0a0c0d77]'
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
+      classNames={{
+        menu: 'bg-blue-200',
+      }}
     >
       {/* Menu hamburguesa */}
       <NavbarContent>
@@ -161,19 +165,20 @@ const Header = () => {
           </RouterLink>
         </NavbarMenuItem>
 
-        <span className='w-full h-[1px] bg-white-p my-2'></span>
-
         {/* Mi perfil */}
         {isAuthenticated ? (
-          <NavbarMenuItem>
-            <RouterLink
-              onClick={() => setIsMenuOpen(false)}
-              to='/profile'
-              className='text-primary font-semibold hover:text-quaternary flex w-full'
-            >
-              Mi perfil
-            </RouterLink>
-          </NavbarMenuItem>
+          <>
+            <span className='w-full h-[1px] bg-white-p my-2'></span>
+            <NavbarMenuItem>
+              <RouterLink
+                onClick={() => setIsMenuOpen(false)}
+                to='/profile'
+                className='text-primary font-semibold hover:text-quaternary flex w-full'
+              >
+                Mi perfil
+              </RouterLink>
+            </NavbarMenuItem>
+          </>
         ) : null}
 
         <span className='w-full h-[1px] bg-white-p my-2'></span>
