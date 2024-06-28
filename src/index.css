@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --primary: #79ae92;
+  }
   body {
     @apply bg-black-p text-white-p;
   }

@@ -1,12 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 import { nextui } from '@nextui-org/react';
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+
+function addVariablesForColors({ addBase, theme }) {
+  const allColors = flattenColorPalette(theme('colors'));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+}
 
 export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     './node_modules/tailwind-datepicker-react/dist/**/*.js',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
@@ -34,6 +45,7 @@ export default {
     nextui({
       defaultTheme: 'dark',
     }),
+    addVariablesForColors,
   ],
   darkMode: 'class',
 };
