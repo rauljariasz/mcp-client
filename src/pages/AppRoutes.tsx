@@ -18,6 +18,7 @@ import AccessDenied from './AccessDenied/AccessDenied';
 import { useData } from '@/hooks/useData';
 import InitialLoad from './InitialLoad/InitialLoad';
 import { useInitialLoad } from '@/hooks/useInitialLoad';
+import Course from './Course/Course';
 
 const AppRoutes = () => {
   // Hooks
@@ -94,8 +95,9 @@ const AppRoutes = () => {
               <Route path='/contact' element={<Contact />} />
               <Route path='/verify' element={<Verify />} />
               <Route path='/forgot-password' element={<ForgotPassword />} />
+              <Route path='/course/:courseUrl' element={<Course />} />
 
-              {/* Rutas autenticadas para el usuario */}
+              {/* Rutas autenticadas */}
               <Route
                 path='/profile'
                 element={isAuthenticated ? <Profile /> : <AccessDenied />}

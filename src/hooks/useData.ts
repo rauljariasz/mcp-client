@@ -1,6 +1,7 @@
 import { CoursesContext } from '@/context/courses';
 import { useContext } from 'react';
 import axios from 'axios';
+import { ClassesInterface } from '@/types';
 
 export const useData = () => {
   const coursesContext = useContext(CoursesContext);
@@ -20,7 +21,19 @@ export const useData = () => {
     }
   };
 
+  const getClasses = async (courseId: string): Promise<ClassesInterface[]> => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}data/getClasses/${courseId}`
+      );
+      return res.data.data;
+    } catch (error) {
+      throw new Error('Error en la petición');
+    }
+  };
+
   return {
     getCourses,
+    getClasses,
   };
 };

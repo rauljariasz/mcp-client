@@ -17,7 +17,7 @@ const CourseCard: FC<CourseCardInterface> = ({ course }) => {
 
   const handlePress = (course: CourseInterface) => {
     if (isAuthenticated) {
-      console.log('Autenticado: ', course.title);
+      navigate(`/course/${course.nameUrl}`);
     } else {
       navigate('/register');
     }
