@@ -19,12 +19,15 @@ import { useData } from '@/hooks/useData';
 import InitialLoad from './InitialLoad/InitialLoad';
 import { useInitialLoad } from '@/hooks/useInitialLoad';
 import Course from './Course/Course';
+import { ROLES } from '@/types';
+import Dashboard from './Dashboard/Dashboard';
 
 const AppRoutes = () => {
   // Hooks
   const { getDataUser, isAccessExpired } = useClient();
   const { getCourses } = useData();
-  const { updateUserInfo, setIsAuthenticated, isAuthenticated } = useAuth();
+  const { updateUserInfo, setIsAuthenticated, isAuthenticated, userInfo } =
+    useAuth();
   const { notifyError } = useNotify();
   const { initialLoad, setInitialLoad } = useInitialLoad();
 
@@ -101,6 +104,19 @@ const AppRoutes = () => {
               <Route
                 path='/profile'
                 element={isAuthenticated ? <Profile /> : <AccessDenied />}
+              />
+
+              {/* CRM */}
+              {/* Rutas autenticadas */}
+              <Route
+                path='/dashboard'
+                element={
+                  isAuthenticated && userInfo.role === ROLES.ADMIN ? (
+                    <Dashboard />
+                  ) : (
+                    <AccessDenied />
+                  )
+                }
               />
             </>
           )}

@@ -15,6 +15,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { RxExit } from 'react-icons/rx';
 import { useInitialLoad } from '@/hooks/useInitialLoad';
 import './Header.css';
+import { ROLES } from '@/types';
 
 // *---------------------------------------------------------* //
 // Tener en cuenta a que debido que se esta usando hashRouter //
@@ -28,7 +29,7 @@ const Header = () => {
 
   // Hooks
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, userInfo } = useAuth();
   const { initialLoad } = useInitialLoad();
 
   return (
@@ -84,7 +85,8 @@ const Header = () => {
           </RouterLink>
         </NavbarItem>
 
-        {isAuthenticated && (
+        {/* Mi perfil */}
+        {isAuthenticated && userInfo.role !== ROLES.ADMIN && (
           <NavbarItem>
             <RouterLink
               to='/profile'
@@ -94,6 +96,18 @@ const Header = () => {
             </RouterLink>
           </NavbarItem>
         )}
+
+        {/* Dashboard */}
+        {userInfo.role === ROLES.ADMIN ? (
+          <NavbarItem>
+            <RouterLink
+              to='/dashboard'
+              className='text-warm font-semibold hover:text-quaternary flex w-full'
+            >
+              Dashboard
+            </RouterLink>
+          </NavbarItem>
+        ) : null}
       </NavbarContent>
 
       {/* Botón "inicia sesión" */}
@@ -166,7 +180,7 @@ const Header = () => {
         </NavbarMenuItem>
 
         {/* Mi perfil */}
-        {isAuthenticated ? (
+        {isAuthenticated && userInfo.role !== ROLES.ADMIN ? (
           <>
             <span className='w-full h-[1px] bg-white-p my-2'></span>
             <NavbarMenuItem>
@@ -176,6 +190,22 @@ const Header = () => {
                 className='text-primary font-semibold hover:text-quaternary flex w-full'
               >
                 Mi perfil
+              </RouterLink>
+            </NavbarMenuItem>
+          </>
+        ) : null}
+
+        {/* Dashboard */}
+        {userInfo.role === ROLES.ADMIN ? (
+          <>
+            <span className='w-full h-[1px] bg-white-p my-2'></span>
+            <NavbarMenuItem>
+              <RouterLink
+                onClick={() => setIsMenuOpen(false)}
+                to='/dashboard'
+                className='text-warm font-semibold hover:text-quaternary flex w-full'
+              >
+                Dashboard
               </RouterLink>
             </NavbarMenuItem>
           </>
