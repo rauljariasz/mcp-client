@@ -32,7 +32,9 @@ const CourseCard: FC<CourseCardInterface> = ({ course }) => {
     >
       <CardBody className='flex flex-row h-[90px] gap-3'>
         {/* Imagen */}
-        {course.imageUrl ? (
+        {/* Agregamos esta validación para evitar que caiga en true
+        Ya uqe de momento no sabemos exactamente como manejaremos las imagenes */}
+        {course.imageUrl === 'xd' ? (
           <figure>
             <Image
               isBlurred

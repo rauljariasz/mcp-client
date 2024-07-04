@@ -17,6 +17,9 @@ import { TbEye } from 'react-icons/tb';
 import { TbEyeCheck } from 'react-icons/tb';
 import { useAuth } from '@/hooks/useAuth';
 import { FiLock } from 'react-icons/fi';
+import axios from 'axios';
+import { useClient } from '@/hooks/useClient';
+import { useNotify } from '@/hooks/useNotify';
 
 interface ClasseCardInterface {
   classe: ClassesInterface;
@@ -25,7 +28,67 @@ interface ClasseCardInterface {
 const ClasseCard: FC<ClasseCardInterface> = ({ classe }) => {
   // Hooks
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { userInfo } = useAuth();
+  const { userInfo, updateUserInfo } = useAuth();
+  const { isAccessExpired } = useClient();
+  const { notifyError } = useNotify();
+
+  // Funcion para abrir el modal
+  const handleOpen = async () => {
+    // Verificamos si el usuario no tiene la clase vista
+    if (!userInfo.viewedClasses.includes(classe.id)) {
+      const token = localStorage.getItem('token');
+      const refresh = localStorage.getItem('refresh');
+
+      if (!token || !refresh) {
+        return;
+      }
+
+      markClassAsViewed(token, refresh, classe.id);
+    }
+    onOpen();
+  };
+
+  const markClassAsViewed = async (
+    access: string,
+    refresh: string,
+    classId: number
+  ) => {
+    try {
+      await axios
+        .put(
+          `${import.meta.env.VITE_API_URL}client/markClassAsViewed`,
+          { classId },
+          {
+            headers: {
+              Authorization: `Bearer ${access}`,
+              refresh_token: refresh,
+            },
+          }
+        )
+        .then((res) => {
+          const { data } = res.data;
+          // Actualizamos los datos del usuario con la respuesta
+          updateUserInfo(data);
+        });
+    } catch (error) {
+      // Manejamos los diferentes errores
+      const errorStatus = await isAccessExpired(error);
+      if (errorStatus === 1) {
+        if (axios.isAxiosError(error)) {
+          const newToken = error.response?.headers['token'];
+          localStorage.setItem('token', newToken);
+          await markClassAsViewed(newToken, refresh, classId);
+          return;
+        }
+      } else if (errorStatus === 2) {
+        if (axios.isAxiosError(error)) {
+          console.log(error.response?.data?.message);
+        }
+      } else if (errorStatus === 3) {
+        notifyError('Tu sesión ha caducado, vuelve a iniciar sesión');
+      }
+    }
+  };
 
   return (
     <div>
@@ -36,11 +99,11 @@ const ClasseCard: FC<ClasseCardInterface> = ({ classe }) => {
           <Card
             className='bg-primary/20 text-white-p w-full'
             isPressable
-            onPress={onOpen}
+            onPress={handleOpen}
           >
             <CardBody className='flex flex-row h-[90px] gap-3'>
               {/* Imagen */}
-              {userInfo.viewedClasses.includes(classe.id) ? (
+              {userInfo?.viewedClasses?.includes(classe?.id) ? (
                 <TbEyeCheck className='w-[65px] h-[55px] self-center text-primary' />
               ) : (
                 <TbEye className='w-[65px] h-[55px] self-center text-primary' />
