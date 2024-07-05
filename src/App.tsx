@@ -5,19 +5,22 @@ import { AuthProvider } from '@context/auth';
 import 'react-toastify/dist/ReactToastify.css';
 import { CoursesProvider } from './context/courses';
 import { InitialLoadProvider } from './context/initialLoad';
+import { ThemeProvider } from '@material-tailwind/react';
 
 function App() {
   return (
     <NextUIProvider>
-      <AuthProvider>
-        <CoursesProvider>
-          <InitialLoadProvider>
-            <HashRouter>
-              <AppRoutes />
-            </HashRouter>
-          </InitialLoadProvider>
-        </CoursesProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <CoursesProvider>
+            <InitialLoadProvider>
+              <HashRouter>
+                <AppRoutes />
+              </HashRouter>
+            </InitialLoadProvider>
+          </CoursesProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </NextUIProvider>
   );
 }

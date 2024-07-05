@@ -6,6 +6,13 @@
   :root {
     --primary: #79ae92;
   }
+  #mov-border,
+  .movBorder {
+    border-style: hidden !important;
+  }
+  * {
+    box-sizing: border-box;
+  }
   body {
     @apply bg-black-p text-white-p;
   }

@@ -1,10 +1,21 @@
+import SearchQuantityUser from '@/components/Dashboard/SearchQuantityUser';
 import { useClient } from '@/hooks/useClient';
 import { useNotify } from '@/hooks/useNotify';
+import { Spinner } from '@nextui-org/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+interface UsersQuantityInterface {
+  free: number;
+  premium: number;
+}
+
 const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [usersQuantity, setUserQuantity] = useState<UsersQuantityInterface>({
+    free: 0,
+    premium: 0,
+  });
 
   const { isAccessExpired } = useClient();
   const { notifyError } = useNotify();
@@ -31,7 +42,8 @@ const Dashboard = () => {
           },
         })
         .then((res) => {
-          console.log(res);
+          const { data } = res;
+          setUserQuantity(data.data);
           setLoading(false);
         });
     } catch (error) {
@@ -55,10 +67,19 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <main className='main-container'>Cargando</main>;
+    return (
+      <main className='main-container flex-center'>
+        <Spinner size='lg' color='primary'></Spinner>
+      </main>
+    );
   }
 
-  return <main className='main-container'>Dashboard</main>;
+  return (
+    <main className='main-container py-4 md:py-8'>
+      {/* Buscar usuario & Cantidad de usuarios */}
+      <SearchQuantityUser usersQuantity={usersQuantity} />
+    </main>
+  );
 };
 
 export default Dashboard;

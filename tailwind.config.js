@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { nextui } from '@nextui-org/react';
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+import withMT from '@material-tailwind/react/utils/withMT';
 
 function addVariablesForColors({ addBase, theme }) {
   const allColors = flattenColorPalette(theme('colors'));
@@ -13,7 +14,7 @@ function addVariablesForColors({ addBase, theme }) {
   });
 }
 
-export default {
+export default withMT({
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
@@ -48,4 +49,4 @@ export default {
     addVariablesForColors,
   ],
   darkMode: 'class',
-};
+});
