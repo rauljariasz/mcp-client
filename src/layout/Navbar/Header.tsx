@@ -68,21 +68,15 @@ const Header = () => {
         </NavbarItem>
 
         <NavbarItem>
-          <RouterLink
-            to='/contact'
-            className='text-primary font-semibold hover:text-quaternary transition-all'
-          >
+          <span className='text-primary font-semibold hover:text-quaternary transition-all'>
             Contacto
-          </RouterLink>
+          </span>
         </NavbarItem>
 
         <NavbarItem>
-          <RouterLink
-            to='/pricing'
-            className='text-primary font-semibold hover:text-quaternary transition-all'
-          >
+          <span className='text-primary font-semibold hover:text-quaternary transition-all'>
             Precios
-          </RouterLink>
+          </span>
         </NavbarItem>
 
         {/* Mi perfil */}
@@ -119,6 +113,7 @@ const Header = () => {
             onClick={() => {
               setIsMenuOpen(false);
               logout();
+              navigate('/', { replace: true });
             }}
           >
             Salir
@@ -158,25 +153,17 @@ const Header = () => {
         <span className='w-full h-[1px] bg-white-p my-2'></span>
 
         <NavbarMenuItem>
-          <RouterLink
-            onClick={() => setIsMenuOpen(false)}
-            to='/contact'
-            className='text-white-p font-semibold hover:text-secondary flex w-full'
-          >
+          <span className='text-white-p font-semibold flex w-full'>
             Contacto
-          </RouterLink>
+          </span>
         </NavbarMenuItem>
 
         <span className='w-full h-[1px] bg-white-p my-2'></span>
 
         <NavbarMenuItem>
-          <RouterLink
-            onClick={() => setIsMenuOpen(false)}
-            to='/pricing'
-            className='text-white-p font-semibold hover:text-quaternary flex w-full'
-          >
+          <span className='text-white-p font-semibold flex w-full'>
             Precios
-          </RouterLink>
+          </span>
         </NavbarMenuItem>
 
         {/* Mi perfil */}
@@ -222,6 +209,7 @@ const Header = () => {
               onClick={() => {
                 setIsMenuOpen(false);
                 logout();
+                navigate('/', { replace: true });
               }}
             >
               Salir <RxExit className='w-5 h-5' />

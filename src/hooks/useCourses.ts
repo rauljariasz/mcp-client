@@ -7,7 +7,7 @@ export const useCourses = () => {
     throw new Error('useCourses must be used within an CoursesContext');
   }
 
-  const { courses } = coursesContext;
+  const { courses, setCourses } = coursesContext;
 
-  return { courses };
+  return { courses, setCourses };
 };
