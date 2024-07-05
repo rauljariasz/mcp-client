@@ -1,6 +1,6 @@
-import CourseCard from '../common/CourseCard';
 import { useCourses } from '@/hooks/useCourses';
 import CreateCourseModal from './CreateCourseModal';
+import CourseCardAdmin from '../common/CourseCardAdmin';
 
 const CoursesList = () => {
   // Hooks
@@ -21,7 +21,7 @@ const CoursesList = () => {
       {/* Lista de cursos */}
       <div className='grid-320 gap-6 justify-center md:justify-evenly mt-8'>
         {courses.map((course) => (
-          <CourseCard course={course} key={course.id} />
+          <CourseCardAdmin course={course} key={course.id} />
         ))}
       </div>
     </section>

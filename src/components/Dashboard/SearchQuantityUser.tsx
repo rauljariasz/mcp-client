@@ -53,10 +53,12 @@ const SearchQuantityUser: FC<SearchQuantityUserInterface> = ({
         {/* Leyenda */}
         <div>
           <div className='flex items-center gap-2 font-semibold'>
-            <span className='w-3 h-3 bg-[#ff8f00] rounded-full'></span> Free
+            <span className='w-3 h-3 bg-[#ff8f00] rounded-full'></span> Free:{' '}
+            {usersQuantity.free}
           </div>
           <div className='flex items-center gap-2 font-semibold'>
-            <span className='w-3 h-3 bg-[#00897b] rounded-full'></span> Premium
+            <span className='w-3 h-3 bg-[#00897b] rounded-full'></span> Premium:{' '}
+            {usersQuantity.premium}
           </div>
           <div className='flex items-center gap-2 font-semibold'>
             <span className='w-3 h-3 bg-[#fff] rounded-full'></span> Usuarios
