@@ -1,5 +1,5 @@
-import { FC, Fragment, useState } from 'react';
-import { CourseInterface } from '@/types';
+import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react';
+import { ClassesInterface } from '@/types';
 import {
   Button,
   Card,
@@ -12,34 +12,25 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { MdDelete } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
 import { SiGitbook } from 'react-icons/si';
-import EditCourseModal from '../Dashboard/EditCourseModal';
 import axios from 'axios';
 import { useNotify } from '@/hooks/useNotify';
-import { useCourses } from '@/hooks/useCourses';
 import { useClient } from '@/hooks/useClient';
+import EditClassModal from '../DashboardCourse/EditClassModal';
 
-interface CourseCardInterface {
-  course: CourseInterface;
+interface ClassCardInterface {
+  classe: ClassesInterface;
+  setClasses: Dispatch<SetStateAction<ClassesInterface[]>>;
 }
 
-const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
+const ClassCardAdmin: FC<ClassCardInterface> = ({ classe, setClasses }) => {
   // States
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
 
   // Hooks
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { notifySuccess, notifyError } = useNotify();
-  const { setCourses } = useCourses();
   const { isAccessExpired } = useClient();
-  const navigate = useNavigate();
-
-  //   Functions
-  // Función para redirecciónar a la lista de clases de un curso (dashboard)
-  const handlePress = (course: CourseInterface) => {
-    navigate(`/dashboard/${course.nameUrl}`);
-  };
 
   //   Petición para Eliminar el curso curso
   const handleDeleteCourse = async (onClose: () => void) => {
@@ -48,20 +39,20 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
     const refresh = localStorage.getItem('refresh');
     try {
       await axios
-        .delete(`${import.meta.env.VITE_API_URL}admin/deleteCourse`, {
+        .delete(`${import.meta.env.VITE_API_URL}admin/deleteClass`, {
           headers: {
             Authorization: `Bearer ${access}`,
             refresh_token: refresh,
           },
           data: {
-            id: course.id,
+            id: classe.id,
           },
         })
         .then((res) => {
           const { data, message } = res.data;
           // Actualizamos los datos con la respuesta
-          setCourses(data);
-          notifySuccess(message, 'dashboardToast');
+          setClasses(data);
+          notifySuccess(message, 'dashboardCourseToast');
           setLoadingButton(false);
           onClose();
         });
@@ -77,13 +68,13 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
         }
       } else if (errorStatus === 2) {
         if (axios.isAxiosError(error)) {
-          notifyError(error.response?.data?.message, 'dashboardToast');
+          notifyError(error.response?.data?.message, 'dashboardCourseToast');
           setLoadingButton(false);
         }
       } else if (errorStatus === 3) {
         notifyError(
           'Tu sesión ha caducado, vuelve a iniciar sesión',
-          'dashboardToast'
+          'dashboardCourseToast'
         );
         setLoadingButton(false);
         onClose();
@@ -94,22 +85,21 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
   return (
     <Card
       className='bg-primary/20 text-white-p'
-      key={course.id}
+      key={classe.id}
       as='div'
       isPressable
-      onClick={() => handlePress(course)}
     >
       <CardBody className='flex flex-row h-[90px] gap-3'>
         {/* Imagen */}
         {/* Agregamos esta validación para evitar que caiga en true
         Ya uqe de momento no sabemos exactamente como manejaremos las imagenes */}
-        {course.imageUrl === 'xd' ? (
+        {classe.imageUrl === 'xd' ? (
           <figure>
             <Image
               isBlurred
               alt='Imagen que ilustra un astronauta'
               className='w-full max-w-[65px]'
-              src={`${import.meta.env.VITE_API_IMGS_URL}${course.imageUrl}.jpg`}
+              src={`${import.meta.env.VITE_API_IMGS_URL}${classe.imageUrl}.jpg`}
             />
           </figure>
         ) : (
@@ -118,7 +108,7 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
 
         {/* Titulo */}
         <section className='flex-1 self-center'>
-          <p className='line-clamp-2 font-semibold'>{course.title}</p>
+          <p className='line-clamp-2 font-semibold'>{classe.title}</p>
         </section>
 
         {/* Flecha */}
@@ -129,7 +119,7 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
           }}
         >
           {/* Boton editar */}
-          <EditCourseModal course={course} />
+          <EditClassModal classe={classe} setClasses={setClasses} />
 
           {/* Boton eliminar */}
           <button
@@ -152,9 +142,9 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
                 <Fragment>
                   <ModalBody className='pt-8'>
                     <p>
-                      Estas seguro que deseas eliminar el curso "
+                      Estas seguro que deseas eliminar la clase "
                       <span className='text-primary font-semibold'>
-                        {course.title}
+                        {classe.title}
                       </span>
                       "
                     </p>
@@ -187,4 +177,4 @@ const CourseCardAdmin: FC<CourseCardInterface> = ({ course }) => {
   );
 };
 
-export default CourseCardAdmin;
+export default ClassCardAdmin;

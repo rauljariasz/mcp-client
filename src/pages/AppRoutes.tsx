@@ -21,6 +21,7 @@ import { useInitialLoad } from '@/hooks/useInitialLoad';
 import Course from './Course/Course';
 import { ROLES } from '@/types';
 import Dashboard from './Dashboard/Dashboard';
+import DashboardCourse from './DashboardCourse/DashboardCourse';
 
 const AppRoutes = () => {
   // Hooks
@@ -113,6 +114,16 @@ const AppRoutes = () => {
                 element={
                   isAuthenticated && userInfo.role === ROLES.ADMIN ? (
                     <Dashboard />
+                  ) : (
+                    <AccessDenied />
+                  )
+                }
+              />
+              <Route
+                path='/dashboard/:courseUrl'
+                element={
+                  isAuthenticated && userInfo.role === ROLES.ADMIN ? (
+                    <DashboardCourse />
                   ) : (
                     <AccessDenied />
                   )
